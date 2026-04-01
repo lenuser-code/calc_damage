@@ -1,6 +1,6 @@
 ﻿/*
  * calc_damage.html
- * (ver. 2010.01.24, ReACT 2.501b)
+ * (ver. 2026.04.01, ReACT 2.501b)
  */
 
 
@@ -91,6 +91,8 @@ var Defence;
 var HC;
 var Correction;
 var State;
+var Offset; /*-- 2026.04.01追加。SETHP用 --*/
+var Reduce; /*-- 2026.04.01追加。レデュース用 --*/
 
 init_status = function(){
   HP = HP_SETTING[0];
@@ -98,6 +100,8 @@ init_status = function(){
   Correction = 100;
   init_defence();
   init_state();
+  Offset = 0;
+  Reduce = 0;
 }
 
 init_defence = function(){
@@ -124,9 +128,17 @@ calc_hit_cor = function(){
 
 proceed = function(dmg, cor, cor_type){
   Guts = calc_guts();
+
+  /*-- 2026.04.01追加 --*/
+  reduce_coef = 1;
+  if(Reduce > 0){
+    reduce_coef = 0.7;
+    Reduce--;
+  }
+
   dmg = Math.floor((dmg * Defence[Guts]) / 100);
   dmg = Math.floor((dmg * calc_hit_cor()) / 100);
-  dmg = Math.floor((dmg * Correction) / 100);
+  dmg = Math.floor((dmg * Correction * reduce_coef) / 100);
   dmg = Math.floor((dmg * STATE_COR[State]) / 100);
 
   HP -= dmg;
@@ -215,8 +227,9 @@ parse_command = function(name, args){
   else if(name in STATE_COR){
     State = name;
   }
-  else if(name in SP && args != null && args[0].match(/^\d+$/)){
-    SP[name](parseInt(args[0]));
+  /*-- 2026.04.01変更 --*/
+  else if(name in SP && (args == null || args[0].match(/^\d+$/))){
+    SP[name](args != null ? parseInt(args[0]) : null);
   }
   else{
     window.alert("コマンドを解析できません...\n(command = '" + name + "')");
@@ -329,6 +342,27 @@ SP["COR"] = function(v){
   Correction = v;
 }
 
+/*-- 2026.04.01追加 --*/
+SP["SETHP"] = function(v){
+  if(HC > 0){
+    window.alert("SETHPはコンボ開始前に使用します");
+  }
+  else {
+    HP = v;
+    Offset = HP_SETTING[0] - v;
+  }
+}
+
+/*-- 2024.04.01追加 --*/
+SP["REDUCE"] = function(v){
+  Reduce = v;
+}
+
+/*-- 2026.04.01追加 --*/
+SP["SHOW_COR"] = function(v){
+  window.alert("Correction = " + Correction);
+}
+
 update = function(){
   var inputs = document.prompt.recipe.value.replace(/\s+/g, "").match(/[^;]+/g);
   var i;
@@ -340,10 +374,10 @@ update = function(){
     }
   }
 
-  document.prompt.result.value = HP_SETTING[0] - HP;
+  document.prompt.result.value = HP_SETTING[0] - HP - Offset;
   save_history(15);
 }
 
 version_text = function(){
-  return "ver. 2010.01.24";
+  return "ver. 2026.04.01";
 }
