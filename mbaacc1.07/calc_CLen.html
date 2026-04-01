@@ -1,161 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF8">
+<meta charset="UTF-8">
 <title>ダメージ計算スクリプト for Ｃレン (MBAACC ver.1.07)</title>
+<link type="text/css" rel="stylesheet" href="./calc_damage.css">
 <script type="text/javascript" src="./calc_damage.js"></script>
-<style>
-  :root {
-    --bg-color: #f1f5f9;
-    --card-bg: #ffffff;
-    --text-main: #334155;
-    --text-dim: #64748b;
-    --accent: #3b82f6;
-    --accent-hover: #2563eb;
-    --border: #e2e8f0;
-    --result-bg: #f0f9ff;
-    --result-text: #0369a1;
-  }
-
-  body {
-    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
-  }
-
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-
-  h1#title {
-    font-size: 1.6rem;
-    margin: 0 0 20px 0;
-    padding-bottom: 10px;
-    border-bottom: 3px solid var(--accent);
-  }
-  h1#title span { font-size: 1rem; color: var(--text-dim); display: block; font-weight: normal; }
-
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 20px;
-  }
-
-  @media (max-width: 850px) {
-    .main-grid { grid-template-columns: 1fr; }
-  }
-
-  .card {
-    border-radius: 8px;
-    background: var(--card-bg);
-    padding: 20px;
-    border: 1px solid var(--border);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    margin-bottom: 20px;
-  }
-
-  .card-title {
-    font-weight: bold;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 8px;
-  }
-
-  /* フォーム要素 */
-  .form-group {
-    margin-bottom: 15px;
-  }
-
-  label {
-    display: block;
-    font-size: 1rem;
-    margin-bottom: 5px;
-    color: var(--text-dim);
-  }
-
-  select, textarea {
-    width: 100%;
-    background: var(--input-bg);
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    padding: 10px;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 1.1rem;
-  }
-
-  input[type="text"] {
-    width: 100%;
-    background: var(--input-bg);
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    padding: 0px 10px;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    margin-top: 10px;
-  }
-
-  textarea {
-    font-family: monospace;
-    resize: vertical;
-  }
-
-  .row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .row > div { flex: 1; min-width: 120px; }
-
-  /* ボタン */
-  .btn-calc {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-    margin-top: 10px;
-    font-size:1.1rem;
-   }
-   .btn-calc:hover { background: var(--accent-hover); }
-
-   /* 技名リストなどの説明セクション */
-   details {
-     background: var(--card-bg);
-     border: 1px solid var(--border);
-     border-radius: 8px;
-     margin-bottom: 10px;
-   }
-
-   summary {
-     padding: 12px;
-     cursor: pointer;
-     font-weight: bold;
-     user-select: none;
-   }
-
-   .details-content {
-     padding: 0 30px 12px 30px;
-     font-size: 1rem;
-     line-height: 1.8rem;
-     color: var(--text-dim);
-   }
-
-   dt { color: var(--accent); font-weight: bold; margin-top: 10px; }
-   dd { margin-left: 1em; margin-bottom: 10px; }
-   code { background: #f1f5f9; padding: 2px 5px; border-radius: 4px; color: #e11d48; }
-</style>
-
 <script type="text/javascript">
 add_version_no = function(){
   if(document.getElementById){
@@ -434,7 +283,7 @@ SP["AD"] = function(v){
             </div>
             <div class="form-group" style="min-width: 80px;">
               <label>&nbsp;</label>
-              <label style="display:inline; font-size: 1.1rem; margin-left: 20px;" for="hisukoha_chk"><input type="checkbox" name="hisukoha" id="hisukoha_chk" style="font-size: 1.1rem;">ヒスコハ補正</label>
+              <label id="hisukoha_label"><input type="checkbox" name="hisukoha">ヒスコハ補正</label>
             </div>
           </div>
 
@@ -444,10 +293,10 @@ SP["AD"] = function(v){
           </div>
 
           <div class="row">
-            <span style="color: var(--text-dim); margin-top: 10px; padding: 8px 0 8px 12px; font-size:1.1rem;">合計ダメージ：</span>
+            <label id="sum">合計ダメージ：</label>
             <input name="result" type="text" readonly style="text-align:right; font-weight:bold; font-size:1.5rem; width:150px;" value="0">
             <button class="btn-calc" onClick="update()">計算</button>
-            <label style="display:inline; font-weight:normal; margin-top:15px; margin-left: 20px; font-size: 1.1rem;"><input type="checkbox" name="floatflag" checked> 応急処置</label>
+            <label id="float_label"><input type="checkbox" name="floatflag" checked> 応急処置</label>
           </div>
         </div>  <!-- card -->
       </form>
