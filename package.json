@@ -1,0 +1,13 @@
+{
+  "name": "calc_damage_rewrite",
+  "version": "1.0.0",
+  "devDependencies": {
+    "jsdoc": "^4.0.0",
+    "better-docs": "^2.7.3",
+    "minami": "^1.2.3",
+    "taffydb": "^2.7.3"
+  },
+  "scripts": {
+    "generate-docs": "jsdoc -c jsdoc.json"
+  }
+}
