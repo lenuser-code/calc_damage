@@ -5,6 +5,7 @@
 <title>ダメージ計算スクリプト for レン (MBAC ver.B2 1.03a)</title>
 <link type="text/css" rel="stylesheet" href="./calc_damage.css">
 <script type="text/javascript" src="./calc_damage.js"></script>
+<script type="text/javascript" src="./update_parser.js"></script>
 <script type="text/javascript">
 add_version_no = function(){
   if(document.getElementById){
@@ -336,6 +337,11 @@ SP["AD"] = function(v){
         <dd>
         <p>現時点での技補正の値を表示します。</p>
         </dd>
+
+        <dt>LOOP(回数) { ... }</dt>
+        <dd>
+        <p>中括弧の中身を指定された回数繰り返します。</p>
+        </dd>
         </dl>
         </div>
       </details>
@@ -370,7 +376,7 @@ SP["AD"] = function(v){
         <dd>
         <p>相手をSTANDにしてダメージを与えます。ヒット数は増えません。</p>
         </dd>
-        
+
         <dt>空中投げ</dt>
         <dd>
         <p>便宜上２段技として実装します。１段目で相手をSTANDにして、２段目でダメージを与えます。ヒット数は増えません。</p>
