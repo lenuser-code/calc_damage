@@ -5,6 +5,7 @@
 <title>ダメージ計算スクリプト for Ｈレン (MBAACC ver.1.07)</title>
 <link type="text/css" rel="stylesheet" href="./calc_damage.css">
 <script type="text/javascript" src="./calc_damage.js"></script>
+<script type="text/javascript" src="./update_parser.js"></script>
 <script type="text/javascript">
 add_version_no = function(){
   if(document.getElementById){
@@ -313,38 +314,38 @@ SP["AD"] = function(v){
         <dd>
         <p>通常攻撃です。</p>
         </dd>
-        
+
         <dt>6AA, 6A&gt;A, 6AAA, 6AA&gt;A, 6A&gt;A&gt;A</dt>
         <dd>
         <p>ワンツースリーです。<code>6A&gt;A</code> ならば5Aも派生技も両方当て、<code>6AA</code> ならば派生技のみを当てる、という違いがあります。<code>6A(1)&gt;A</code> のように段数指定できます。</p>
         </dd>
-        
+
         <dt>THROW, AIRTHROW, AT, AIRTHROW@1, AT@1</dt>
         <dd>
         <p>投げ／空中投げです。空中投げは <code>AT</code> と略すことができます。
         生空投げの場合は <code>AIRTHROW@1</code> などと書いてください。</p>
         </dd>
-        
+
         <dt>SC, 2SC, JSC</dt>
         <dd>
         <p>シールドカウンターです。</p>
         </dd>
-        
+
         <dt>236A, 236B, 236C, 236[A], 236[B], J236A, J236B, J236C, J236[B]</dt>
         <dd>
         <p>フルール・フリーズです。 <code>236[A]</code> などはBE版を表します。</p>
         </dd>
-        
+
         <dt>623A, 623B, 623C</dt>
         <dd>
         <p>ロンドン・ロンドです。A派生はありません（普通のAロンドと同じ）。</p>
         </dd>
-        
+
         <dt>214A, 214B, 214C</dt>
         <dd>
         <p>トラ猫／黒猫／猫ロケです。</p>
         </dd>
-        
+
         <dt>AD(ヒット数)</dt>
         <dd>
         <p>ウタカタです。他の技と違い、引数として "何ヒットさせるか" を指定します。</p>
@@ -361,40 +362,45 @@ SP["AD"] = function(v){
         <dd>
         <p>リバースビート補正のために使います。上書き補正を生じさせます。</p>
         </dd>
-        
+
         <dt>MULT(補正値)</dt>
         <dd>
         <p>EXキャンセル補正のために使います。乗算補正を生じさせます。</p>
         </dd>
-        
+
         <dt>STAND, CROUCH, FLOAT, DOWN</dt>
         <dd>
         <p>相手の状態を変更します。</p>
         </dd>
-        
+
         <dt>COR(補正値)</dt>
         <dd>
         <p>現在の技補正を指定された値に変更します。変則的なコンボの計算にどうぞ。</p>
         </dd>
-        
+
         <dt>SETHP(体力)</dt>
         <dd>
         <p>最大HPを指定された値に変更します。コンボ開始前に使用します。</p>
         </dd>
-        
+
         <dt>REDUCE(回数)</dt>
         <dd>
         <p>これ以降に計算される指定された回数分のダメージをレデュースします。</p>
         </dd>
-        
+
         <dt>SHOW_COR</dt>
         <dd>
         <p>現時点での技補正の値を表示します。</p>
         </dd>
-        
+
         <dt>SHOW_IHC</dt>
         <dd>
         <p>現時点での内部ヒット数の値を表示します。</p>
+        </dd>
+
+        <dt>LOOP(回数) { ... }</dt>
+        <dd>
+        <p>中括弧の中身を指定された回数繰り返します。</p>
         </dd>
         </dl>
         </div>
@@ -408,22 +414,22 @@ SP["AD"] = function(v){
         <dd>
         <p>１ヒットにつき０～１ダメージの誤差が生じることがあります。</p>
         </dd>
-        
+
         <dt>ヒスコハフラグ</dt>
         <dd>
         <p>ヒスコハ用の防御補正を適用する場合にチェックします。</p>
         </dd>
-        
+
         <dt>応急処置フラグ</dt>
         <dd>
         <p>MBAAは単精度の浮動小数で計算してるっぽいので、それに合わせて無理やり単精度に変更します。</p>
         </dd>
-        
+
         <dt>ReACT属性</dt>
         <dd>
         <p>引き剥がしの処理は自動的に行われます。</p>
         </dd>
-        
+
         <dt>実行履歴</dt>
         <dd>
         <p>１５個まで履歴が残ります。クリックすると履歴が読み込まれます。</p>
@@ -440,7 +446,7 @@ SP["AD"] = function(v){
         <dd>
         <p>相手をSTANDにしてダメージを与えます。ヒット数は増えません。</p>
         </dd>
-        
+
         <dt>空中投げ</dt>
         <dd>
         <p>便宜上２段技として実装します。１段目で相手をSTANDにして、２段目でダメージを与えます。ヒット数は増えません。</p>

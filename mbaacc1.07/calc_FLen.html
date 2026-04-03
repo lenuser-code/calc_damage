@@ -5,6 +5,7 @@
 <title>ダメージ計算スクリプト for Ｆレン (MBAACC ver.1.07)</title>
 <link type="text/css" rel="stylesheet" href="./calc_damage.css">
 <script type="text/javascript" src="./calc_damage.js"></script>
+<script type="text/javascript" src="./update_parser.js"></script>
 <script type="text/javascript">
 add_version_no = function(){
   if(document.getElementById){
@@ -374,6 +375,11 @@ SP["AD"] = function(v){
         <dd>
         <p>現時点での内部ヒット数の値を表示します。</p>
         </dd>
+
+        <dt>LOOP(回数) { ... }</dt>
+        <dd>
+        <p>中括弧の中身を指定された回数繰り返します。</p>
+        </dd>
         </dl>
         </div>
       </details>
@@ -386,22 +392,22 @@ SP["AD"] = function(v){
         <dd>
         <p>１ヒットにつき０～１ダメージの誤差が生じることがあります。</p>
         </dd>
-        
+
         <dt>ヒスコハフラグ</dt>
         <dd>
         <p>ヒスコハ用の防御補正を適用する場合にチェックします。</p>
         </dd>
-        
+
         <dt>応急処置フラグ</dt>
         <dd>
         <p>MBAAは単精度の浮動小数で計算してるっぽいので、それに合わせて無理やり単精度に変更します。</p>
         </dd>
-        
+
         <dt>ReACT属性</dt>
         <dd>
         <p>引き剥がしの処理は自動的に行われます。</p>
         </dd>
-        
+
         <dt>実行履歴</dt>
         <dd>
         <p>１５個まで履歴が残ります。クリックすると履歴が読み込まれます。</p>
@@ -418,22 +424,22 @@ SP["AD"] = function(v){
         <dd>
         <p>相手をSTANDにしてダメージを与えます。ヒット数は増えません。</p>
         </dd>
-        
+
         <dt>空中投げ</dt>
         <dd>
         <p>便宜上２段技として実装します。１段目で相手をSTANDにして、２段目でダメージを与えます。ヒット数は増えません。</p>
         </dd>
-        
+
         <dt>シールドカウンター</dt>
         <dd>
         <p>６９％のリバースビート補正が生じます。</p>
         </dd>
-        
+
         <dt>ホウマツノユメ</dt>
         <dd>
         <p>１段目のみ上書き補正が設定されています。</p>
         </dd>
-        
+
         <dt>ＬＡ</dt>
         <dd>
         <p>ゲージ残量に応じて補正が生じます。手動で設定してください。１３段目のみ、相手をFLOATにしてダメージを与えます。</p>
