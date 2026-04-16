@@ -1,7 +1,7 @@
 # calc_damage
 damage calculation scripts for Len (MetlyBlood)
 
-atwikiで公開していたスクリプトを移動＆デザイン変更したものです。atwikiのpubに置いたファイルが直接開けなくなったことがあり、より適切な置き場所としてGitHub Pagesを使うことにしました。
+atwikiで公開していたスクリプトを移動＆デザイン変更したものです。 以前、atwikiのpubに置いたファイルが直接開けなくなったことがあり、より適切な置き場所としてGitHub Pagesを使うことにしました。
 
 ## ReACT FT ver.2.501b
 https://lenuser-code.github.io/calc_damage/react_2.501b/calc_Len_FT.html
