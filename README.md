@@ -1,5 +1,6 @@
 # calc_damage
 damage calculation scripts for Len (MetlyBlood)
+
 atwikiで公開していたスクリプトを移動＆デザイン変更したものです。atwikiのpubに置いたファイルが直接開けなくなったことがあり、より適切な置き場所としてGitHub Pagesを使うことにしました。
 
 ## ReACT FT ver.2.501b
